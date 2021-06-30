@@ -3,11 +3,11 @@ import turtle as t
 def rectangle(horizontal, vertical, color):
     t.pendown()
     t.pensize(1)
-    t.color()
+    t.color(color)
     t.begin_fill()
 
     #This for looop draws a rectangle
-    for counter in range(1, 3): #this range function maks the loop run twice
+    for _ in range(1, 3): #this range function maks the loop run twice
         t.forward(horizontal)
         t.right(90)
         t.forward(vertical)
@@ -47,7 +47,7 @@ rectangle(100, 150, 'Red') #Draw a red rectangle 100 across and 150 down.
 t.goto(-150, 70)
 rectangle(60, 15, 'Grey')
  #Lower right arm
-t.goto(-150, 100)
+t.goto(-150, 110)
 rectangle(15, 40, 'Grey')
 
 t.goto(-155, 130)
