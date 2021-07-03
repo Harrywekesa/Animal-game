@@ -33,3 +33,4 @@ for event in events:
     days_until = days_btn_dates(event[1], today)
     display = 'It is %s days until %s ' %(days_until, event_name)
     c.create_text(100, 100,anchor = 'w', fill = 'lightblue', font = 'Arial 28 bold', text = display) 
+root.mainloop()
