@@ -1,7 +1,7 @@
 from tkinter import HIDDEN, NORMAL, Tk, Canvas
-
-
-#t makes the eyes look closed by hiding the pupils and filling the eyes with the same color as the body.
+import random
+    
+#It makes the eyes look closed by hiding the pupils and filling the eyes with the same color as the body.
 def toggle_eyes():
     current_color = c.itemcget(eye_left,'fill') #checks the eyes’ current color: white is open, blue is closed.
     new_color = c.body_color if current_color == 'white' else 'white' #sets the eyes’ new_color to the opposite value
@@ -16,6 +16,19 @@ def blink():
     toggle_eyes() #Close the eyes.
     root.after(250, toggle_eyes) #Wait 250 milliseconds, then open the eyes
     root.after(3000, blink)        #Wait 3,000 milliseconds, then blink again.
+
+def toggle_left_eye():
+    
+    current_color = c.itemcget(eye_left, 'fill')
+    new_color = c.body_color if current_color == 'white' else 'white'
+    current_state = c.itemcget(pupil_left, 'state')
+    new_state = NORMAL if current_state == HIDDEN else HIDDEN
+    c.itemconfigure(pupil_left, state = new_state)
+    c.itemconfigure(eye_left, fill = new_color)
+    
+def wink(event):
+    toggle_left_eye()
+    root.after(250, toggle_left_eye)
     
 def toggle_pupils():  # sourcery skip: extract-duplicate-method
     if not c.eyes_crossed: #if the pupils aren’t crossed, this line moves them in.
@@ -76,6 +89,15 @@ def cheecky(event):
     root.after(1000, toggle_pupils) #Uncross the pupils after 1,000 milliseconds.
     return
 
+def change_color():
+    pet_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet' ]
+    c.body_color = random.choice(pet_colors)
+    c.itemconfigure(body, outline = c.body_color, fill = c.body_color)
+    c.itemconfigure(ear_left, outline = c.body_color, fill = c.body_color)
+    c.itemconfigure(ear_right, outline = c.body_color, fill = c.body_color)
+    c.itemconfigure(foot_left, outline = c.body_color, fill = c.body_color )
+    c.itemconfigure(foot_right, outline = c.body_color, fill = c.body_color)
+    root.after(5000, change_color)
 
 root = Tk()    
 c= Canvas(root, width = 400, height = 400)
@@ -108,7 +130,7 @@ c.bind('<Motion>', show_happy)
 c.bind('Leave', hide_happy)
 
 #To trigger Screen Pet’s cheeky expression, link any double-click event to the cheeky() function
-c.bind('<Double - 1>', cheecky)
+c.bind('<Double - 1>', wink)
 
 #flag variables to the code to keep track of whether Screen Pet’s eyes
 #are crossed or its tongue is out
@@ -118,5 +140,6 @@ c.tongue_out = False
 
 root.after(1000, blink)
 root.after(5000, sad)
+root.after(1000, change_color)
 
 c.mainloop()
